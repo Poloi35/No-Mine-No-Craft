@@ -9,6 +9,7 @@ public class MouseLook : MonoBehaviour
 	public Transform playerBody;
 	float xRotation = 0f;
 	
+	//Commentaire
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
