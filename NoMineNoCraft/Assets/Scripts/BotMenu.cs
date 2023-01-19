@@ -7,7 +7,6 @@ public class BotMenu : MonoBehaviour
 {
     public GameObject canvas;
     public Transform botPosition;
-
     public InputActionAsset mapAsset;
     private InputActionMap mapPlayer;
     private InputActionMap mapUI;

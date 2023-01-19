@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-
 	public CharacterController controller;
 	
 	public float speed = 13f;
@@ -26,8 +25,6 @@ public class PlayerMovement : MonoBehaviour
 		Vector3 move = transform.right * x + transform.forward * z;
 		
 		controller.Move(move * speed * Time.deltaTime);
-		
-		
 	}
 
 	public void Jump(InputAction.CallbackContext context)
