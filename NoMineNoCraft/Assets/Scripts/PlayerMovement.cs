@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
 
 	public CharacterController controller;
 	
-	public float speed = 17f;
+	public float speed = 13f;
 	public float gravity = -40f;
 	public float jumpHeight = 3f;
 	
@@ -18,6 +19,27 @@ public class PlayerMovement : MonoBehaviour
 	public LayerMask groundMask;
 	bool isGrounded;
 	
+	public void Move(InputAction.CallbackContext context)
+	{
+		float x = context.ReadValue<Vector2>()[0];
+		float z = context.ReadValue<Vector2>()[1];
+		Vector3 move = transform.right * x + transform.forward * z;
+		
+		controller.Move(move * speed * Time.deltaTime);
+		
+		
+	}
+
+	public void Jump(InputAction.CallbackContext context)
+	{
+		if (!context.started)
+            return;
+			
+		velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+		velocity.y += gravity * Time.deltaTime;
+		
+		controller.Move(velocity * Time.deltaTime);
+	}
     void Update()
     {
 		isGrounded =  Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -29,15 +51,6 @@ public class PlayerMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
 		float z = Input.GetAxis("Vertical");
 		
-		Vector3 move = transform.right * x + transform.forward * z;
 		
-		controller.Move(move * speed * Time.deltaTime);
-		
-		if(Input.GetButtonDown("Jump") && isGrounded){
-			velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
-		}
-		velocity.y += gravity * Time.deltaTime;
-		
-		controller.Move(velocity * Time.deltaTime);
     }
 }
