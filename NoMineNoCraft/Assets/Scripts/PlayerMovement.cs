@@ -5,49 +5,86 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-	public CharacterController controller;
-	
-	public float speed = 13f;
-	public float gravity = -40f;
-	public float jumpHeight = 3f;
-	
-	Vector3 velocity;
-	
-	public Transform groundCheck;
-	public float groundDistance = 0.4f;
-	public LayerMask groundMask;
-	bool isGrounded;
-	
-	public void Move(InputAction.CallbackContext context)
-	{
-		float x = context.ReadValue<Vector2>()[0];
-		float z = context.ReadValue<Vector2>()[1];
-		Vector3 move = transform.right * x + transform.forward * z;
-		
-		controller.Move(move * speed * Time.deltaTime);
+	private Rigidbody rb;
+	private PlayerInput playerInput;
+
+	public float speed = 7f;
+	public float airSpeedMultiplier = .4f;
+	public float jumpForce = 5f;
+	private float jumpCooldown = .2f;
+	private bool isJumping = false;
+	public bool isReadyToJump = true;
+	Vector2 input;
+
+	public BoxCollider bc;
+	private bool isGrounded;
+	public float groundDrag = 5f;
+	public LayerMask ground;
+
+	private void Awake() {
+		rb = GetComponent<Rigidbody>();
 	}
 
 	public void Jump(InputAction.CallbackContext context)
 	{
-		if (!context.started)
-            return;
-			
-		velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
-		velocity.y += gravity * Time.deltaTime;
-		
-		controller.Move(velocity * Time.deltaTime);
+		if (context.performed)
+			isJumping = true;
+		else if (context.canceled)
+			isJumping = false;
 	}
-    void Update()
-    {
-		isGrounded =  Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-		
-		if(isGrounded && velocity.y < 0){
-			velocity.y = -6f;
+
+	private void ResetJump()
+	{
+		isReadyToJump = true;
+	}
+
+	public void Move(InputAction.CallbackContext context)
+	{
+		input = context.ReadValue<Vector2>();
+	}
+
+	private void SpeedControl()
+	{
+		Vector2 flatVel = new Vector2(rb.velocity.x, rb.velocity.z);
+
+		if (flatVel.magnitude > speed)
+		{
+			flatVel = flatVel.normalized * speed;
+			rb.velocity = new Vector3(flatVel.x, rb.velocity.y, flatVel.y);
 		}
-		
-        float x = Input.GetAxis("Horizontal");
-		float z = Input.GetAxis("Vertical");
-		
-		
-    }
+	}
+
+	private void FixedUpdate()
+	{
+		Vector3 force = 10f * speed * (transform.right * input.x + transform.forward * input.y);
+		if (isGrounded)
+			rb.AddForce(force, ForceMode.Force);
+		else
+			rb.AddForce(force * airSpeedMultiplier, ForceMode.Force);
+	}
+
+	private void Update()
+	{
+		// Ground check
+		isGrounded = Physics.Raycast(transform.position, Vector3.down, bc.size.y * .5f + .05f, ground);
+
+		if (isReadyToJump && isGrounded && isJumping)
+		{
+			isReadyToJump = false;
+			rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+			rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
+			Invoke(nameof(ResetJump), jumpCooldown);
+		}
+
+		// Handle drag
+		if (isGrounded)
+			rb.drag = groundDrag;
+		else
+			rb.drag = 0;
+
+		// Clamp speed
+		SpeedControl();
+	}
+	
 }
