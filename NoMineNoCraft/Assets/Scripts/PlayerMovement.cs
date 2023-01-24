@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 	private Rigidbody rb;
 	private PlayerInput playerInput;
 
-	public float speed = 7f;
+	public float maxSpeed = 7f;
 	public float airSpeedMultiplier = .4f;
 	public float jumpForce = 5f;
 	private float jumpCooldown = .2f;
@@ -47,16 +47,16 @@ public class PlayerMovement : MonoBehaviour
 	{
 		Vector2 flatVel = new Vector2(rb.velocity.x, rb.velocity.z);
 
-		if (flatVel.magnitude > speed)
+		if (flatVel.magnitude > maxSpeed)
 		{
-			flatVel = flatVel.normalized * speed;
+			flatVel = flatVel.normalized * maxSpeed;
 			rb.velocity = new Vector3(flatVel.x, rb.velocity.y, flatVel.y);
 		}
 	}
 
 	private void FixedUpdate()
 	{
-		Vector3 force = 10f * speed * (transform.right * input.x + transform.forward * input.y);
+		Vector3 force = 10f * maxSpeed * (transform.right * input.x + transform.forward * input.y);
 		if (isGrounded)
 			rb.AddForce(force, ForceMode.Force);
 		else
