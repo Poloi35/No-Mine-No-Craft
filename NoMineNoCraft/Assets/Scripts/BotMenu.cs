@@ -35,7 +35,7 @@ public class BotMenu : MonoBehaviour
     {
         if (!context.started)
             return;
-        
+
         if (canvas.activeInHierarchy)
         {
             canvas.SetActive(false);
