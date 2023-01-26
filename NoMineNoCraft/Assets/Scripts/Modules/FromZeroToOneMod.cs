@@ -9,13 +9,13 @@ public class FromZeroToOneMod : Module
 
     public float value = 0f;
 
-    public override void execute()
+    public override void Execute()
     {
         value += 0.001f;
         if (value > 1)
         {
             value = 0f;
         }
-        triggerValueChangement(value);
+        TriggerValueChangement(value);
     }
 }

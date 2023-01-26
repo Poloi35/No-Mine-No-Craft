@@ -16,16 +16,19 @@ public class BotShoulder : MonoBehaviour
 
     private void Update()
     {        
-        func?.execute();
+        func?.Execute();
     }
 
     private void Awake()
     {
         //With this configuration I just debug.log 3 times the value of the FromZeroToOne mod
-        func.addModule(croissantMod1);
-        func.addModule(multi);
-        func.addModule(add);
-        add.addInput(croissantMod1);
-        func.addModule(log);
+        func.AddModule(croissantMod1);
+        multi.AddInput(croissantMod1);
+        func.AddModule(multi);
+        add.AddInput(multi);
+        add.AddInput(croissantMod1);
+        func.AddModule(add);
+        log.AddInput(add);
+        func.AddModule(log);
     }
 }

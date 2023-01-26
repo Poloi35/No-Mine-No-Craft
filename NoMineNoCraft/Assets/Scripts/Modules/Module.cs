@@ -12,24 +12,23 @@ public abstract class Module
     protected int inputsReady = 0;
 
     //This is the main function of every module, which is to be redefined in every subclass
-    public abstract void execute();
+    public abstract void Execute();
 
 
-    //Those three make the output part of every module. You can do it by +=ing on the OnValueChanged with the function you want to be called for this output
-    //Probably needs to be changed so that OnValueChanged is protected and there is a setter that is public but not top level priority
-    //Probably also needs to be able to have multiple outputs but i'll see that later too
+    //Those four make the output part of every module. You can do it by +=ing on the OnValueChanged with the function you want to be called for this output
     public delegate void TriggerOutput(float value);
-    public event TriggerOutput OnValueChanged;
-
-    protected void triggerValueChangement(float value)
+    private event TriggerOutput OnValueChanged;
+    protected void TriggerValueChangement(float value)
     {
         OnValueChanged(value);
+    }
+    public void AddListener(TriggerOutput func){
+        OnValueChanged += func;
     }
 
 
     //This is the part about the input of modules. You just have to use it like NameOfTheModuleYouWantToAddAnInputTo.addInput(NameOfTheModuleWithTheOutput)
-
-    protected void onEvent(float value, int inputNb)
+    protected void OnEvent(float value, int inputNb)
     {   
         //I have this inputsReady int that will be incremented when i get a value that wasnt already there
         if (inputs[inputNb] == null)
@@ -38,7 +37,7 @@ public abstract class Module
 
         //Then when all my inputs are ready I just have to execute the module and reset everything (number of inputs ready to 0 and every input to null)
         if (inputsReady == inputs.Count){
-            this.execute();
+            this.Execute();
             inputsReady = 0;
             for (int i = 0; i < inputs.Count; i++){
                 inputs[i] = null;
@@ -46,11 +45,11 @@ public abstract class Module
         }
     }
 
-    public void addInput(Module input)
+    public void AddInput(Module input)
     {
         int nbInputs = inputs.Count;
         //This works so that you know which input has been given and where it should go in the input list up there
-        input.OnValueChanged += (float value) => onEvent(value, nbInputs);
+        input.AddListener((float value) => OnEvent(value, nbInputs));
         inputs.Add(null); //Initializes the input to the "didnt receive input yet" value
     }
 }

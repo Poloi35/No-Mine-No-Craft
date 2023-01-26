@@ -5,8 +5,8 @@ using UnityEngine;
 //This mod takes two inputs and add them together before outputting the result
 public class AddsTwoInputs : Module
 {
-    public override void execute()
+    public override void Execute()
     {
-        triggerValueChangement(inputs[0].Value + inputs[1].Value);
+        TriggerValueChangement(inputs[0].Value + inputs[1].Value);
     }
 }

@@ -6,18 +6,16 @@ public class ModuleFunction : Module
 {
     private List<Module> modules = new List<Module>();
 
-    public void addModule(Module mod){
-        if (modules.Count > 0)
-            mod.addInput(modules[modules.Count-1]);
+    public void AddModule(Module mod){
         modules.Add(mod);
     }
 
-    public void removeModule(Module mod){
+    public void RemoveModule(Module mod){
         modules.Remove(mod);
     }
 
-    public override void execute()
+    public override void Execute()
     {
-        modules[0].execute();
+        modules[0].Execute();
     }
 }
