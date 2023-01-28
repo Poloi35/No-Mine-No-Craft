@@ -9,18 +9,10 @@ public abstract class BasicModule : Module
     //This int is only there to know when we can execute the execute function (so basically when every input has been retrieved)
     protected int inputsReady = 0;
 
-    private int randomNb = 0;
-
     //The purpose of this list is to stock inputs so that you can access them once you need them but also to quickly check if they are ready (will have the null value if they are not)
     protected List<float?> inputs = new List<float?>();
     public BasicModule()
-    {   
-        if (randomNb == 0){
-            System.Random rnd = new System.Random();
-            randomNb = rnd.Next(1, 101);
-        }
-        Debug.Log("Initilized " + this.GetType().Name);
-        Debug.Log(randomNb);
+    {
         initializeInputs();
         initializeOutputs();
     }
