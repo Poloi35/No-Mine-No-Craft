@@ -2,18 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//This mod takes two inputs and add them together before outputting the result
-public class AddsTwoInputs : BasicModule
+//Always outputs the number given in the constructor
+public class ConstantNumber : BasicModule
 {
+    int value;
 
+    public ConstantNumber(int v){
+        value = v;
+    }
     public override void Execute()
     {
-        TriggerValueChangement(inputs[0].Value + inputs[1].Value);
+        TriggerValueChangement(value);
     }
 
     protected override int GetNumberOfInputs()
     {
-        return 2;
+        return 0;
     }
 
     protected override int GetNumberOfOutputs()
