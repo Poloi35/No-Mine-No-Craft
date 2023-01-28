@@ -5,14 +5,13 @@ using UnityEngine.InputSystem;
 
 public class MouseLook : MonoBehaviour
 {
-	
 	public float mouseSensitivity = 15f;
 	public Transform playerTransform;
 	float xRotation = 0f;
-	
+
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.lockState = CursorLockMode.Locked;
     }
 
 	public void Look(InputAction.CallbackContext context)

@@ -22,6 +22,8 @@ public class BotMenu : MonoBehaviour
         if (!context.started)
             return;
 
+        Cursor.lockState = CursorLockMode.None;
+
         float distanceToTriggerButton = 2.5f;
         if (Vector3.Distance(botPosition.position, this.transform.position) < distanceToTriggerButton && !canvas.activeInHierarchy)
         {

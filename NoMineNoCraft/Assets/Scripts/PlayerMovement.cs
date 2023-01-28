@@ -21,7 +21,8 @@ public class PlayerMovement : MonoBehaviour
 	public float groundDrag = 5f;
 	public LayerMask ground;
 
-	private void Awake() {
+	private void Awake()
+	{
 		rb = GetComponent<Rigidbody>();
 	}
 
