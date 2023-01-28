@@ -7,15 +7,17 @@ using UnityEngine.Events;
 public class Chip : MonoBehaviour
 {
     private bool chipIsSelected = false;
-    private Vector2 mousePos;
+    private Vector3 worldPos;
     private PlayerInputActions playerInputActions;
     private BoxCollider2D chipCollider;
     [SerializeField]
     private CircleCollider2D[] pinColliders;
-    [SerializeField] private Camera canvasCam;
+    private Camera canvasCam;
     
     private void Awake()
     {
+        canvasCam = Camera.main;
+        
         chipCollider = GetComponent<BoxCollider2D>();
         chipCollider.offset = Vector2.zero;
         chipCollider.size = GetComponent<RectTransform>().sizeDelta;
@@ -32,10 +34,11 @@ public class Chip : MonoBehaviour
 
     private void MoveChip(InputAction.CallbackContext context)
     {
-        mousePos = context.ReadValue<Vector2>();
+        worldPos = canvasCam.ScreenToWorldPoint(context.ReadValue<Vector2>());
+        worldPos.z = 100f; // Shouldn't be hardcoded
 
         if (chipIsSelected)
-            transform.position = mousePos;
+            transform.position = worldPos;
             
     }
 
@@ -43,15 +46,16 @@ public class Chip : MonoBehaviour
     {
         foreach(CircleCollider2D pinCollider in pinColliders)
         {
-            if (context.ReadValue<float>() == 1 && pinCollider.bounds.Contains(mousePos))
+            if (context.ReadValue<float>() == 1 && pinCollider.bounds.Contains(worldPos))
             {
                 // Create wire
                 return;
             }
         }
 
-        if (chipCollider.bounds.Contains(mousePos))
+        if (chipCollider.bounds.Contains(worldPos))
         {
+            Debug.Log("chip selected");
             chipIsSelected = context.ReadValue<float>() == 1;
         }
     }
