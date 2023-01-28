@@ -6,9 +6,7 @@ using UnityEngine.Events;
 
 public class Chip : MonoBehaviour
 {
-    private bool chipIsSelected = false;
-    private Vector3 worldPos;
-    private PlayerInputActions playerInputActions;
+    private bool chipIsSelected = true;
     private BoxCollider2D chipCollider;
     [SerializeField]
     private CircleCollider2D[] pinColliders;
@@ -29,27 +27,26 @@ public class Chip : MonoBehaviour
             pinCollider.radius = ((RectTransform)pinCollider.transform).sizeDelta.x/2;
         }
         
-        playerInputActions = new PlayerInputActions();
-        playerInputActions.UI.Enable();
-        playerInputActions.UI.Point.performed += MoveChip;
-        playerInputActions.UI.Click.performed += OnClick;
+        Singleton.instance.playerInputActions.UI.Enable();
+        Singleton.instance.playerInputActions.UI.Point.performed += MoveChip;
+        Singleton.instance.playerInputActions.UI.Click.performed += OnClick;
 }
 
     private void MoveChip(InputAction.CallbackContext context)
     {
-        worldPos = canvasCam.ScreenToWorldPoint(context.ReadValue<Vector2>());
-        worldPos.z = 100f; // Shouldn't be hardcoded
-
+        Vector3 point = Singleton.instance.worldMousePos;
+        point.z = 100f;
         if (chipIsSelected)
-            transform.position = worldPos;
-            
+            transform.position = point;
     }
 
     private void OnClick(InputAction.CallbackContext context)
     {
+        Vector3 point = Singleton.instance.worldMousePos;
+        point.z = 100f;
         foreach(CircleCollider2D pinCollider in pinColliders)
         {
-            if (!pinCollider.bounds.Contains(worldPos))
+            if (!pinCollider.bounds.Contains(point))
                 continue;
 
             if (context.ReadValue<float>() == 1)
@@ -63,7 +60,7 @@ public class Chip : MonoBehaviour
             }
         }
 
-        if (chipCollider.bounds.Contains(worldPos))
+        if (chipCollider.bounds.Contains(point))
         {
             chipIsSelected = context.ReadValue<float>() == 1;
         }

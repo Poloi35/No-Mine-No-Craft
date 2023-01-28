@@ -18,6 +18,9 @@ public class ChipInstantiator : MonoBehaviour
 
     public void InstantiateChip()
     {
-        Instantiate(chipPrefab, Vector3.zero, Quaternion.identity, transform).transform.localPosition = Vector3.zero;
+        Vector3 point = Singleton.instance.worldMousePos;
+        point.z = 100f;
+        GameObject chip = (GameObject)Instantiate(chipPrefab, point, Quaternion.identity, transform);
+        chip.transform.localPosition = Vector3.zero;
     }
 }

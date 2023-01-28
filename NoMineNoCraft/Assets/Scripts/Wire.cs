@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Wire : MonoBehaviour
 {
@@ -11,6 +12,21 @@ public class Wire : MonoBehaviour
     private void Awake() {
         lr = GetComponent<LineRenderer>();
         ec = GetComponent<EdgeCollider2D>();
+        Singleton.instance.playerInputActions.UI.RightClick.performed += DestroyWire;
+    }
+
+    private void DestroyWire(InputAction.CallbackContext context)
+    {
+        // A better condition would be to calculate the distance bewtween mouse and collider
+        if (ec.bounds.Contains(Singleton.instance.worldMousePos))
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        Singleton.instance.playerInputActions.UI.RightClick.performed -= DestroyWire;
     }
 
     private void SetWirePoints()
@@ -18,9 +34,9 @@ public class Wire : MonoBehaviour
         lr.positionCount = pinTransforms.Length;
         for (int i = 0; i < lr.positionCount; i++)
         {
-            Vector3 vertPos = pinTransforms[i].position;
-            vertPos.z += -0.01f;
-            lr.SetPosition(i, vertPos);
+            Vector3 vertexPos = pinTransforms[i].position;
+            vertexPos.z += -0.01f;
+            lr.SetPosition(i, vertexPos);
         }
     }
 
@@ -38,7 +54,5 @@ public class Wire : MonoBehaviour
     {
         SetWirePoints();
         SetColliderPoints();
-
-        
     }
 }
