@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Always outputs the number given in the constructor
 public class ConstantNumber : BasicModule
 {
     int value;

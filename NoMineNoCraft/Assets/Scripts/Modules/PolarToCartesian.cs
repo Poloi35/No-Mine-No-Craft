@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+//Takes a polar position as input (that makes 2 inputs r and theta) and outputs the cartesian position (so 2 outputs which are X and Y)
 public class PolarToCartesian : BasicModule
 {
     public override void Execute()

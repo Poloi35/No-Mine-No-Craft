@@ -66,6 +66,6 @@ public class BotShoulder : MonoBehaviour
         adds3mod.LinkToOutput(croissantMod1,2);
         log1.LinkToOutput(adds3mod);
 
-        //Pas d'erreur mais rien s'affiche, croissantmod1 output bien, createInput a lieu (pas sur que ça mette qqch dedans mais ya pa de raison)
+        //Franchement flemme de commenter ça ça sert a rien c'est que du test de merde tout peut etre viré
     }
 }
