@@ -59,6 +59,7 @@ public class Chip : MonoBehaviour
             } else
             {
                 wireInstantiator.InstantiateWire(pinCollider.transform);
+                return;
             }
         }
 

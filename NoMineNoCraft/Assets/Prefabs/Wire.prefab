@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8919217770752563012}
   - component: {fileID: 8919217770752563034}
   - component: {fileID: 8919217770752563013}
+  - component: {fileID: 801628786}
   m_Layer: 5
   m_Name: Wire
   m_TagString: Untagged
@@ -149,4 +150,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93f4fe53737e73d4980ccfe628b2d696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pinTransforms: []
+  pinTransforms:
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!68 &801628786
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8919217770752563015}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: 212.49, y: 0}
+  - {x: -216.1, y: 0}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
