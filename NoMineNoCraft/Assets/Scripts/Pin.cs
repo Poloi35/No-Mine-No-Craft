@@ -4,10 +4,4 @@ using UnityEngine;
 
 public class Pin : MonoBehaviour
 {
-    private PlayerInputActions playerInputActions;
-
-    private void Awake()
-    {
-        
-    }
 }

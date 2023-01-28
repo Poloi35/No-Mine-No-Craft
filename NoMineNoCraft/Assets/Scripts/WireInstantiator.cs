@@ -11,6 +11,7 @@ public class WireInstantiator : MonoBehaviour
     public void InstantiateWire(Transform endingPin)
     {
         GameObject wire = (GameObject)Instantiate(wirePrefab, Vector3.zero, Quaternion.identity, wiresTransform);
+        // Set the wire's two transforms to follow
         wire.GetComponent<Wire>().pinTransforms = new Transform[] {startingPin, endingPin};
     }
 

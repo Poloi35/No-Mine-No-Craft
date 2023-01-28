@@ -29,17 +29,19 @@ public class Wire : MonoBehaviour
         Singleton.instance.playerInputActions.UI.RightClick.performed -= DestroyWire;
     }
 
+    // Moves the wire based on the pins' transforms
     private void SetWirePoints()
     {
         lr.positionCount = pinTransforms.Length;
         for (int i = 0; i < lr.positionCount; i++)
         {
             Vector3 vertexPos = pinTransforms[i].position;
-            vertexPos.z += -0.01f;
+            vertexPos.z += -0.01f; // Wire can't be rendered on canvas so it's put in front of it
             lr.SetPosition(i, vertexPos);
         }
     }
 
+    // Sets the collider on top of the wire
     private void SetColliderPoints()
     {
         List<Vector2> points = new List<Vector2>(pinTransforms.Length);
