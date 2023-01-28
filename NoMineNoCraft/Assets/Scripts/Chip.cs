@@ -55,7 +55,6 @@ public class Chip : MonoBehaviour
 
         if (chipCollider.bounds.Contains(worldPos))
         {
-            Debug.Log("chip selected");
             chipIsSelected = context.ReadValue<float>() == 1;
         }
     }
