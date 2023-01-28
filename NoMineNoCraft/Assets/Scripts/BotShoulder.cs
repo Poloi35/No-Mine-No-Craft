@@ -7,28 +7,33 @@ using UnityEngine.InputSystem;
 public class BotShoulder : MonoBehaviour
 {
 
-    public ModuleFunction func = new ModuleFunction();
 
-    public Module croissantMod1 = new FromZeroToOneMod();
-    public Module multi = new MultipliesByTwo();
-    public AddsTwoInputs add = new AddsTwoInputs();
-    public Module log = new DebugLogger();
+    public Module croissantMod1;
+    public Module multi;
+    public Module add;
+    public Module log1;
+    public Module log2;
+    public Module pol2cart;
+    public Module constant1;
+    public Module constant2;
 
     private void Update()
     {        
-        func?.Execute();
+        constant1?.Execute();
+        constant2?.Execute();
     }
 
     private void Awake()
     {
-        //With this configuration I just debug.log 3 times the value of the FromZeroToOne mod
-        func.AddModule(croissantMod1);
-        multi.AddInput(croissantMod1);
-        func.AddModule(multi);
-        add.AddInput(multi);
-        add.AddInput(croissantMod1);
-        func.AddModule(add);
-        log.AddInput(add);
-        func.AddModule(log);
+        pol2cart = new PolarToCartesian();
+        log1 = new DebugLogger("Je suis log1 et je vous apporte l'information :\n");
+        log2 = new DebugLogger("Je suis log2 et je vous apporte l'information :\n");
+        constant1 = new ConstantNumber(7);
+        constant2 = new ConstantNumber(0);
+
+        pol2cart.LinkToOutput(constant1,0);
+        pol2cart.LinkToOutput(constant2,1);
+        log1.LinkToOutput(pol2cart,outputNb:0);
+        log2.LinkToOutput(pol2cart,outputNb:1);
     }
 }

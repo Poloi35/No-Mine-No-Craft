@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-//This mod takes two inputs and add them together before outputting the result
-public class AddsTwoInputs : BasicModule
+public class PolarToCartesian : BasicModule
 {
-
     public override void Execute()
     {
-        TriggerValueChangement(inputs[0].Value + inputs[1].Value);
+        float r = inputs[0].Value;
+        float theta = inputs[1].Value;
+        TriggerValueChangement(r*Mathf.Cos(theta), 0);
+        TriggerValueChangement(r*Mathf.Sin(theta), 1);
     }
 
     protected override int GetNumberOfInputs()
@@ -18,6 +18,6 @@ public class AddsTwoInputs : BasicModule
 
     protected override int GetNumberOfOutputs()
     {
-        return 1;
+        return 2;
     }
 }

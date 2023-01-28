@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 //This mod doesnt take input and outputs one value that changes over time to grow from zero up to one and then will reset to zero
-public class FromZeroToOneMod : Module
+public class FromZeroToOneMod : BasicModule
 {
 
     public float value = 0f;
@@ -17,5 +17,14 @@ public class FromZeroToOneMod : Module
             value = 0f;
         }
         TriggerValueChangement(value);
+    }
+
+    protected override int GetNumberOfInputs(){
+        return 1;
+    }
+
+    protected override int GetNumberOfOutputs()
+    {
+        return 1;
     }
 }
