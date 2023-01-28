@@ -13,11 +13,14 @@ public class Chip : MonoBehaviour
     [SerializeField]
     private CircleCollider2D[] pinColliders;
     private Camera canvasCam;
+    public WireInstantiator wireInstantiator;
     
     private void Awake()
     {
         canvasCam = Camera.main;
         
+        wireInstantiator = GetComponentInParent<WireInstantiator>();
+
         chipCollider = GetComponent<BoxCollider2D>();
         chipCollider.offset = Vector2.zero;
         chipCollider.size = GetComponent<RectTransform>().sizeDelta;
@@ -46,10 +49,16 @@ public class Chip : MonoBehaviour
     {
         foreach(CircleCollider2D pinCollider in pinColliders)
         {
-            if (context.ReadValue<float>() == 1 && pinCollider.bounds.Contains(worldPos))
+            if (!pinCollider.bounds.Contains(worldPos))
+                continue;
+
+            if (context.ReadValue<float>() == 1)
             {
-                // Create wire
+                wireInstantiator.SetStartingPin(pinCollider.transform);
                 return;
+            } else
+            {
+                wireInstantiator.InstantiateWire(pinCollider.transform);
             }
         }
 

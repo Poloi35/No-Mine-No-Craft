@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Wire : MonoBehaviour
 {
-    [SerializeField] private Transform[] pinTransforms;
+    public Transform[] pinTransforms;
     private LineRenderer lr;
 
     private void Awake() {
