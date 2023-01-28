@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class Chip : MonoBehaviour
     private CircleCollider2D[] pinColliders;
     private Camera canvasCam;
     public WireInstantiator wireInstantiator;
+
+    public event Action OnChipMoved;
     
     private void Awake()
     {
@@ -38,6 +41,7 @@ public class Chip : MonoBehaviour
         point.z = 100f;
         if (chipIsSelected)
             transform.position = point;
+            OnChipMoved?.Invoke(); // Nothing is subrscribed to OnChipMoved
     }
 
     private void OnClick(InputAction.CallbackContext context)
