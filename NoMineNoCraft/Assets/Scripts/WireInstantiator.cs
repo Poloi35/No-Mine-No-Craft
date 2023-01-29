@@ -6,17 +6,13 @@ public class WireInstantiator : MonoBehaviour
 {
     [SerializeField] private GameObject wirePrefab;
     [SerializeField] private Transform wiresTransform;
-    private Transform startingPin;
+    public Transform _startingPin;
+    public Transform startingPin { get { return _startingPin; } set { _startingPin = value; } }
 
     public void InstantiateWire(Transform endingPin)
     {
         GameObject wire = (GameObject)Instantiate(wirePrefab, Vector3.zero, Quaternion.identity, wiresTransform);
         // Set the wire's two transforms to follow
-        wire.GetComponent<Wire>().pinTransforms = new Transform[] {startingPin, endingPin};
-    }
-
-    public void SetStartingPin(Transform pin)
-    {
-        startingPin = pin;
+        wire.GetComponent<Wire>().pinTransforms = new Transform[] { _startingPin, endingPin };
     }
 }

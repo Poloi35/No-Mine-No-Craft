@@ -15,10 +15,14 @@ public class Chip : MonoBehaviour
     public WireInstantiator wireInstantiator;
 
     public event Action OnChipMoved;
+
+    private static int nbChips = 0;
+    private static int nbChipsVisited = 0;
     
     private void Awake()
     {
         canvasCam = Camera.main;
+        nbChips++;
         
         wireInstantiator = GetComponentInParent<WireInstantiator>();
 
@@ -53,6 +57,10 @@ public class Chip : MonoBehaviour
         // Check if pin is clicked
         foreach(CircleCollider2D pinCollider in pinColliders)
         {
+            // If startingPin is not null it means a pin was found on an other chip
+            if (wireInstantiator.startingPin && context.ReadValue<float>() == 1)
+                return;
+
             if (!pinCollider.bounds.Contains(point))
                 continue;
 
@@ -60,16 +68,25 @@ public class Chip : MonoBehaviour
             if (context.ReadValue<float>() == 1)
             {
                 // Save the starting point of the wire
-                wireInstantiator.SetStartingPin(pinCollider.transform);
-                return;
+                wireInstantiator.startingPin = pinCollider.transform;
             } else
             {
                 // Create the wire
-                wireInstantiator.InstantiateWire(pinCollider.transform);
-                return;
+                if (wireInstantiator.startingPin)
+                    wireInstantiator.InstantiateWire(pinCollider.transform);
+                    wireInstantiator.startingPin = null;
+                    nbChipsVisited = 0;
             }
+            return;
         }
 
+        if (nbChipsVisited++ == nbChips)
+        {
+            Debug.Log("No pin found");
+            wireInstantiator.startingPin = null;
+            nbChipsVisited = 0;
+        }
+        
         // Check if chip is clicked (if no pin is clicked)
         if (chipCollider.bounds.Contains(point))
         {
