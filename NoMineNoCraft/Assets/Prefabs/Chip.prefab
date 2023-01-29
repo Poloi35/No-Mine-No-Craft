@@ -110,10 +110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f4acd9128aa30a45838b602222cf0b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pinColliders:
+  _pinColliders:
   - {fileID: 1602417343488247246}
   - {fileID: 1602417342513718594}
-  wireInstantiator: {fileID: 0}
 --- !u!222 &1602417342241252961
 CanvasRenderer:
   m_ObjectHideFlags: 0
