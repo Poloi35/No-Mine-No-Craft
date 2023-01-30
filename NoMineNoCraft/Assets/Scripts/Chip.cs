@@ -40,8 +40,10 @@ public class Chip : MonoBehaviour
         Vector3 point = Singleton.instance.worldMousePos;
         point.z = 100f; // Distance from camera to screen (shouldn't be hardcoded)
         if (chipCanMove)
+        {
             transform.position = point;
-        OnChipMoved?.Invoke(); // Nothing is subrscribed to OnChipMoved rn
+            OnChipMoved?.Invoke();
+        }
     }
 
     public void EnableChipMovement(bool _chipCanMove)
@@ -59,7 +61,6 @@ public class Chip : MonoBehaviour
         {
             yield return pin;
         }
-
     }
 
     public void addInputPin(Pin pin)

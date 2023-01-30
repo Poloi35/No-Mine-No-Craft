@@ -15,6 +15,20 @@ public class Wire : MonoBehaviour
         Singleton.instance.playerInputActions.UI.RightClick.performed += DestroyWire;
     }
 
+    private void Start() {
+        SetWirePoints();
+        SetColliderPoints();
+    }
+
+    public void SetSubscriptionsOnChipMove()
+    {
+        for (int i = 0; i < pins.Length; i++)
+        {
+            pins[i].parentChip.OnChipMoved += SetWirePoints;
+            pins[i].parentChip.OnChipMoved += SetColliderPoints;
+        }
+    }
+
     private void DestroyWire(InputAction.CallbackContext context)
     {
         // A better condition would be to calculate the distance bewtween mouse and collider
@@ -27,6 +41,11 @@ public class Wire : MonoBehaviour
     private void OnDestroy()
     {
         Singleton.instance.playerInputActions.UI.RightClick.performed -= DestroyWire;
+        for (int i = 0; i < pins.Length; i++)
+        {
+            pins[i].parentChip.OnChipMoved -= SetWirePoints;
+            pins[i].parentChip.OnChipMoved -= SetColliderPoints;
+        }
         Pin.DeleteLinkBetween(pins[0], pins[1]);
 
     }
@@ -52,11 +71,5 @@ public class Wire : MonoBehaviour
             points.Add(transform.InverseTransformPoint(pin.transform.position));
         }
         ec.SetPoints(points);
-    }
-
-    private void Update()
-    {
-        SetWirePoints();
-        SetColliderPoints();
     }
 }

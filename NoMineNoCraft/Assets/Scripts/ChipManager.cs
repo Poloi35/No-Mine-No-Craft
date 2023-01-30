@@ -40,7 +40,8 @@ public class ChipManager : MonoBehaviour
             float y = j * chip.chipCollider.size.y / (2 * (nbInput + 1));
             pinGameObject.transform.localPosition = new Vector3(x, y, 0);
             Pin pin = pinGameObject.GetComponent<Pin>();
-            pin.index = -(i + 1);
+            pin.index = -(i+1);
+            pin.parentChip = chip.GetComponent<Chip>();
             chip.addInputPin(pin);
         }
         for (int i = 0; i < nbOutput; i++)
@@ -51,7 +52,8 @@ public class ChipManager : MonoBehaviour
             float y = j * chip.chipCollider.size.y / (2 * (nbOutput + 1));
             pinGameObject.transform.localPosition = new Vector3(x, y, 0);
             Pin pin = pinGameObject.GetComponent<Pin>();
-            pin.index = i + 1;
+            pin.index = i+1;
+            pin.parentChip = chip.GetComponent<Chip>();
             chip.addOutputPin(pin);
         }
 
