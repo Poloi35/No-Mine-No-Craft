@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Wire : MonoBehaviour
 {
-    public Transform[] pinTransforms;
+    public Pin[] pins;
     private LineRenderer lr;
     private EdgeCollider2D ec;
 
@@ -27,15 +27,17 @@ public class Wire : MonoBehaviour
     private void OnDestroy()
     {
         Singleton.instance.playerInputActions.UI.RightClick.performed -= DestroyWire;
+        Pin.DeleteLinkBetween(pins[0], pins[1]);
+
     }
 
     // Moves the wire based on the pins' transforms
     private void SetWirePoints()
     {
-        lr.positionCount = pinTransforms.Length;
+        lr.positionCount = pins.Length;
         for (int i = 0; i < lr.positionCount; i++)
         {
-            Vector3 vertexPos = pinTransforms[i].position;
+            Vector3 vertexPos = pins[i].transform.position;
             vertexPos.z += -0.01f; // Wire can't be rendered on canvas so it's put in front of it
             lr.SetPosition(i, vertexPos);
         }
@@ -44,10 +46,10 @@ public class Wire : MonoBehaviour
     // Sets the collider on top of the wire
     private void SetColliderPoints()
     {
-        List<Vector2> points = new List<Vector2>(pinTransforms.Length);
-        foreach (Transform pinTransform in pinTransforms)
+        List<Vector2> points = new List<Vector2>(pins.Length);
+        foreach (Pin pin in pins)
         {
-            points.Add(transform.InverseTransformPoint(pinTransform.position));
+            points.Add(transform.InverseTransformPoint(pin.transform.position));
         }
         ec.SetPoints(points);
     }

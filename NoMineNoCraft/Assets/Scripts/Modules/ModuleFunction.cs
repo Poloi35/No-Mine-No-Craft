@@ -82,4 +82,14 @@ public class ModuleFunction : Module
     public int GetNumberOfOutputs(){
         return outputs.Count;
     }
+
+    public void RemoveListener(int outputNb, Module.TriggerOutput func)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void UnlinkFromOutput(Module mod, int inputNb = 0, int outputNb = 0)
+    {
+        throw new System.NotImplementedException();
+    }
 }

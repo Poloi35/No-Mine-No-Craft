@@ -16,7 +16,7 @@ public class Chip : MonoBehaviour
     public event Action OnChipMoved;
 
     private void Awake()
-    {   
+    {
         inputPins = new List<Pin>();
         outputPins = new List<Pin>();
         canvasCam = Camera.main;

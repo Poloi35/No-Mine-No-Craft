@@ -16,8 +16,8 @@ public class BotShoulder : MonoBehaviour
     private void Awake()
     {
         Module pol2cart = new PolarToCartesian();
-        Module log1 = new DebugLogger("Je suis log1 et je vous apporte l'information :\n");
-        Module log2 = new DebugLogger("Je suis log2 et je vous apporte l'information :\n");
+        Module log1 = new DebugLogger();
+        Module log2 = new DebugLogger();
         Module constant1 = new ConstantNumber(7);
         Module constant2 = new ConstantNumber(0);
 

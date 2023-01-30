@@ -12,6 +12,8 @@ public abstract class BasicModule : Module
     //The purpose of this list is to stock inputs so that you can access them once you need them but also to quickly check if they are ready (will have the null value if they are not)
     protected List<float?> inputs = new List<float?>();
 
+    protected List<Module.TriggerOutput> listeningFuncs = new List<Module.TriggerOutput>();
+
     public BasicModule()
     {
         initializeInputs();
@@ -24,6 +26,7 @@ public abstract class BasicModule : Module
         for (int i = 0; i < GetNumberOfInputs(); i++)
         {
             inputs.Add(null);
+            listeningFuncs.Add(null);
         }
     }
     public abstract int GetNumberOfInputs();
@@ -35,7 +38,7 @@ public abstract class BasicModule : Module
     public void initializeOutputs()
     {
         for (int i = 0; i <= GetNumberOfOutputs(); i++)
-        {   
+        {
             outputs.Add(null);
         }
     }
@@ -51,8 +54,13 @@ public abstract class BasicModule : Module
     }
     //This is for another module to connect to you. The other module will tell which output he wants to listen and which function will be called when this output outputs
     public void AddListener(int outputNb, Module.TriggerOutput func)
-    {   
+    {
         outputs[outputNb] += func;
+    }
+
+    public void RemoveListener(int outputNb, Module.TriggerOutput func)
+    {
+        outputs[outputNb] -= func;
     }
 
 
@@ -80,6 +88,14 @@ public abstract class BasicModule : Module
     //To link Module1 output to Module2 input just do Module2.LinkToOutput(Module1, the number of the input of Module2, the number of the output of Module1)
     public void LinkToOutput(Module output, int inputNb = 0, int outputNb = 0)
     {
-        output.AddListener(outputNb, (float value) => OnEvent(value, inputNb));
+        Debug.Log(inputNb);
+        listeningFuncs[inputNb] = (float value) => OnEvent(value, inputNb);
+        output.AddListener(outputNb, listeningFuncs[inputNb]);
+    }
+
+    public void UnlinkFromOutput(Module output, int inputNb = 0, int outputNb = 0)
+    {
+        Debug.Log("On a supprimé un truc nomrlamenet");
+        output.RemoveListener(outputNb, listeningFuncs[inputNb]);
     }
 }
