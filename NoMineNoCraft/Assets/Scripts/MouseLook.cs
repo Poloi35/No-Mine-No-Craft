@@ -9,9 +9,12 @@ public class MouseLook : MonoBehaviour
 	public Transform playerTransform;
 	float xRotation = 0f;
 
+	private void Awake() {
+		Singleton.instance.playerInputActions.Player.Look.performed += Look;
+	}
+
     void Start()
     {
-        // Cursor.lockState = CursorLockMode.Locked;
     }
 
 	public void Look(InputAction.CallbackContext context)

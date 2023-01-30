@@ -6,10 +6,17 @@ using UnityEngine.InputSystem;
 public class BotMenu : MonoBehaviour
 {
     public GameObject canvas;
+    [SerializeField] private GameObject playerCamera;
+    [SerializeField] private GameObject UICamera;
     public Transform botPosition;
     public InputActionAsset mapAsset;
     private InputActionMap mapPlayer;
     private InputActionMap mapUI;
+
+    private void Awake() {
+        Singleton.instance.playerInputActions.Player.Interact.performed += OpenMenu;
+        Singleton.instance.playerInputActions.UI.Interact.started += CloseMenu;
+    }
 
     void Start()
     {
@@ -19,15 +26,14 @@ public class BotMenu : MonoBehaviour
 
     public void OpenMenu(InputAction.CallbackContext context)
     {
-        if (!context.started)
-            return;
-
         Cursor.lockState = CursorLockMode.None;
 
         float distanceToTriggerButton = 2.5f;
         if (Vector3.Distance(botPosition.position, this.transform.position) < distanceToTriggerButton && !canvas.activeInHierarchy)
         {
             canvas.SetActive(true);
+            playerCamera.SetActive(false);
+            UICamera.SetActive(true);
             mapPlayer.Disable();
             mapUI.Enable();
         }
@@ -38,11 +44,12 @@ public class BotMenu : MonoBehaviour
         if (!context.started)
             return;
 
-        if (canvas.activeInHierarchy)
-        {
-            canvas.SetActive(false);
-            mapUI.Disable();
-            mapPlayer.Enable();
-        }
+        Cursor.lockState = CursorLockMode.Locked;
+        Debug.Log("ok");
+        canvas.SetActive(false);
+        playerCamera.SetActive(true);
+        UICamera.SetActive(false);
+        mapUI.Disable();
+        mapPlayer.Enable();
     }
 }

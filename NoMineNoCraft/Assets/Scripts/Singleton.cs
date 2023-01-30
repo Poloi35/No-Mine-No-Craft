@@ -19,11 +19,20 @@ public class Singleton : MonoBehaviour
         
         // Input system
         playerInputActions = new PlayerInputActions();
+        playerInputActions.UI.Disable();
+        playerInputActions.Player.Enable();
         instance.playerInputActions.UI.Point.performed += UpdateMousePos;
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void UpdateMousePos(InputAction.CallbackContext context)
     {
         worldMousePos = Camera.main.ScreenToWorldPoint(context.ReadValue<Vector2>());
+    }
+
+    public void SwitchInputMap(string mapName)
+    {
+        
     }
 }

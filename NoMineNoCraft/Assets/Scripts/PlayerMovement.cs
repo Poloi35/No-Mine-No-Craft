@@ -24,24 +24,15 @@ public class PlayerMovement : MonoBehaviour
 	private void Awake()
 	{
 		rb = GetComponent<Rigidbody>();
-	}
-
-	public void Jump(InputAction.CallbackContext context)
-	{
-		if (context.performed)
-			isJumping = true;
-		else if (context.canceled)
-			isJumping = false;
+		Singleton.instance.playerInputActions.Player.Jump.performed += _ => isJumping = true;
+		Singleton.instance.playerInputActions.Player.Jump.canceled += _ => isJumping = false;
+		Singleton.instance.playerInputActions.Player.Move.performed += ctx => input = ctx.ReadValue<Vector2>();
+		Singleton.instance.playerInputActions.Player.Move.canceled += ctx => input = ctx.ReadValue<Vector2>();
 	}
 
 	private void ResetJump()
 	{
 		isReadyToJump = true;
-	}
-
-	public void Move(InputAction.CallbackContext context)
-	{
-		input = context.ReadValue<Vector2>();
 	}
 
 	private void SpeedControl()
