@@ -8,23 +8,26 @@ using UnityEngine.Events;
 public class Chip : MonoBehaviour
 {
     private bool chipCanMove = true;
-    private BoxCollider2D chipCollider;
-    [SerializeField] private CircleCollider2D[] _pinColliders;
-    public CircleCollider2D[] pinColliders { get { return _pinColliders; } set { _pinColliders = value; } }
+    public Module module { get; set; }
+    public BoxCollider2D chipCollider { get; set; }
+    private List<Pin> inputPins, outputPins;
     private Camera canvasCam;
 
     public event Action OnChipMoved;
 
     private void Awake()
-    {
+    {   
+        inputPins = new List<Pin>();
+        outputPins = new List<Pin>();
         canvasCam = Camera.main;
 
         // Set chip and pin's collider's bounds to their respective shapes
         chipCollider = GetComponent<BoxCollider2D>();
         chipCollider.offset = Vector2.zero;
         chipCollider.size = GetComponent<RectTransform>().sizeDelta;
-        foreach (CircleCollider2D pinCollider in pinColliders)
+        foreach (Pin pin in iterateThroughPins())
         {
+            CircleCollider2D pinCollider = pin.pinCollider;
             pinCollider.radius = ((RectTransform)pinCollider.transform).sizeDelta.x / 2;
         }
 
@@ -44,5 +47,38 @@ public class Chip : MonoBehaviour
     public void EnableChipMovement(bool _chipCanMove)
     {
         chipCanMove = _chipCanMove;
+    }
+
+    public IEnumerable<Pin> iterateThroughPins()
+    {
+        foreach (Pin pin in inputPins)
+        {
+            yield return pin;
+        }
+        foreach (Pin pin in outputPins)
+        {
+            yield return pin;
+        }
+
+    }
+
+    public void addInputPin(Pin pin)
+    {
+        inputPins.Add(pin);
+    }
+
+    public void addOutputPin(Pin pin)
+    {
+        outputPins.Add(pin);
+    }
+
+    public Pin getInputPin(int index)
+    {
+        return inputPins[index];
+    }
+
+    public Pin getOutputPin(int index)
+    {
+        return outputPins[index];
     }
 }

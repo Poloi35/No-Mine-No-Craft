@@ -20,7 +20,7 @@ public class FromZeroToOneMod : BasicModule
     }
 
     public override int GetNumberOfInputs(){
-        return 1;
+        return 0;
     }
 
     public override int GetNumberOfOutputs()

@@ -4,4 +4,12 @@ using UnityEngine;
 
 public class Pin : MonoBehaviour
 {
+    public CircleCollider2D pinCollider { get; set; }
+
+    public int index { get; set; }
+
+    private void Awake()
+    {
+        pinCollider = GetComponent<CircleCollider2D>();
+    }
 }

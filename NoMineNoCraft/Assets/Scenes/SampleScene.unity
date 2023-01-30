@@ -351,7 +351,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2887873166e7d074285e5b97fad065f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldMousePos: {x: 0, y: 0, z: 0}
 --- !u!1 &240103452
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,7 +1110,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wirePrefab: {fileID: 8919217770752563015, guid: cfc8a8f5d71a3414499e7dbe609da21e, type: 3}
   wiresTransform: {fileID: 240103453}
-  _startingPin: {fileID: 0}
 --- !u!114 &1247240529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1124,7 +1122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c110e6950b9e0744887bd07a75a3a1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chipPrefab: {fileID: 1602417342241252973, guid: 5cbe66447f6578a4a874b5ed2b5d138a, type: 3}
+  chipPrefab: {fileID: 690173864106463442, guid: 5ee5b64125adb8644a2d27a6a7ddd190, type: 3}
+  pinPrefab: {fileID: 999402560125911137, guid: 0b72f01e09c89ba4685773694e12dbd3, type: 3}
   button: {fileID: 1449663911}
 --- !u!1 &1262235120
 GameObject:
@@ -1576,7 +1575,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1247240529}
         m_TargetAssemblyTypeName: ChipManager, Assembly-CSharp
-        m_MethodName: InstantiateChip
+        m_MethodName: InstantiateFromZeroToOneMod
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

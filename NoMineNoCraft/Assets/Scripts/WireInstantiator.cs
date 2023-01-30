@@ -6,8 +6,7 @@ public class WireInstantiator : MonoBehaviour
 {
     [SerializeField] private GameObject wirePrefab;
     [SerializeField] private Transform wiresTransform;
-    public Transform _startingPin;
-    public Transform startingPin { get { return _startingPin; } set { _startingPin = value; } }
+    public Transform startingPin { get; set; }
 
     public void InstantiateWire(Transform endingPin)
     {

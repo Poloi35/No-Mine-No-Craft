@@ -3,25 +3,60 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System;
 
 public class ChipManager : MonoBehaviour
 {
-    private List<GameObject> chips = new List<GameObject>();
+    private List<Chip> chips = new List<Chip>();
     [SerializeField] private GameObject chipPrefab;
+    [SerializeField] private GameObject pinPrefab;
     [SerializeField] private Button button;
     private WireInstantiator wireInstantiator;
 
-    private void Awake() {
+    private void Awake()
+    {
         Singleton.instance.playerInputActions.UI.Click.performed += OnClick;
         wireInstantiator = GetComponentInParent<WireInstantiator>();
     }
 
-    public void InstantiateChip()
+    private void InstantiateChip<ModuleType>() where ModuleType: Module,new()
     {
         Vector3 point = Singleton.instance.worldMousePos;
         point.z = 100f; // Distance from camera to screen (shouldn't be hardcoded)
-        GameObject chip = (GameObject)Instantiate(chipPrefab, point, Quaternion.identity, transform);
+        GameObject chipGameObject = (GameObject)Instantiate(chipPrefab, point, Quaternion.identity, transform);
+        Chip chip = chipGameObject.GetComponent<Chip>();
+        chip.module = new ModuleType();
+
+        int nbInput = chip.module.GetNumberOfInputs();
+        int nbOutput = chip.module.GetNumberOfOutputs();
+        for (int i = 0; i < nbInput; i++)
+        {
+            int j = -nbInput + 1 + 2*i;
+            GameObject pinGameObject = (GameObject)Instantiate(pinPrefab, new Vector3(0, 0, 0), Quaternion.identity, chip.transform);
+            float x = -chip.chipCollider.size.x / 2;
+            float y = j * chip.chipCollider.size.y / (2 * (nbInput + 1));
+            pinGameObject.transform.localPosition = new Vector3(x, y, 0);
+            Pin pin = pinGameObject.GetComponent<Pin>();
+            pin.index = -(i+1);
+            chip.addInputPin(pin);
+        }
+        for (int i = 0; i < nbOutput; i++)
+        {
+            int j = -nbOutput + 1 + 2*i;
+            GameObject pinGameObject = (GameObject)Instantiate(pinPrefab, new Vector3(0, 0, 0), Quaternion.identity, chip.transform);
+            float x = chip.chipCollider.size.x / 2;
+            float y = j * chip.chipCollider.size.y / (2 * (nbOutput + 1));
+            pinGameObject.transform.localPosition = new Vector3(x, y, 0);
+            Pin pin = pinGameObject.GetComponent<Pin>();
+            pin.index = i+1;
+            chip.addOutputPin(pin);
+        }
+
         chips.Add(chip);
+    }
+
+    public void InstantiateFromZeroToOneMod(){
+        InstantiateChip<FromZeroToOneMod>();
     }
 
     private void OnClick(InputAction.CallbackContext context)
@@ -29,36 +64,36 @@ public class ChipManager : MonoBehaviour
         Vector3 point = Singleton.instance.worldMousePos;
         point.z = 100f; // Distance from camera to screen (shouldn't be hardcoded)
 
-        foreach (GameObject chipGameObject in chips)
+        foreach (Chip chip in chips)
         {
-            Chip chip = chipGameObject.GetComponent<Chip>();
-            foreach (CircleCollider2D pinCollider in chip.pinColliders)
+            foreach (Pin pin in chip.iterateThroughPins())
             {
+                CircleCollider2D pinCollider = pin.pinCollider;
                 // If point is in pin's bounds
                 if (!pinCollider.bounds.Contains(point))
                     continue;
-                
+
                 if (context.ReadValue<float>() == 1)
                 {
                     // Save the starting point of the wire
                     wireInstantiator.startingPin = pinCollider.transform;
-                } else
+                }
+                else
                 {
                     // Create the wire
                     if (wireInstantiator.startingPin)
                         wireInstantiator.InstantiateWire(pinCollider.transform);
-                        wireInstantiator.startingPin = null;
+                    wireInstantiator.startingPin = null;
                 }
                 return;
             }
         }
 
-        foreach (GameObject chipGameObject in chips)
+        foreach (Chip chip in chips)
         {
-            Chip chip = chipGameObject.GetComponent<Chip>();
             wireInstantiator.startingPin = null;
 
-            if (chip.GetComponent<BoxCollider2D>().bounds.Contains(point))
+            if (chip.chipCollider.bounds.Contains(point))
             {
                 chip.EnableChipMovement(context.ReadValue<float>() == 1);
             }

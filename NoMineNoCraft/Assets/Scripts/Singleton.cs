@@ -7,7 +7,7 @@ public class Singleton : MonoBehaviour
 {
     public static Singleton instance {get; private set;}
     public PlayerInputActions playerInputActions;
-    public Vector3 worldMousePos; // Mouse pos converted to world coordinates
+    public Vector3 worldMousePos { get; set; } // Mouse pos converted to world coordinates
 
     private void Awake()
     {
