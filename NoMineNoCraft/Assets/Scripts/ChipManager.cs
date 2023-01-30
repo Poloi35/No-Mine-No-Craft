@@ -38,6 +38,7 @@ public class ChipManager : MonoBehaviour
             pinGameObject.transform.localPosition = new Vector3(x, y, 0);
             Pin pin = pinGameObject.GetComponent<Pin>();
             pin.index = -(i+1);
+            pin.parentChip = chip.GetComponent<Chip>();
             chip.addInputPin(pin);
         }
         for (int i = 0; i < nbOutput; i++)
@@ -49,6 +50,7 @@ public class ChipManager : MonoBehaviour
             pinGameObject.transform.localPosition = new Vector3(x, y, 0);
             Pin pin = pinGameObject.GetComponent<Pin>();
             pin.index = i+1;
+            pin.parentChip = chip.GetComponent<Chip>();
             chip.addOutputPin(pin);
         }
 
@@ -68,21 +70,20 @@ public class ChipManager : MonoBehaviour
         {
             foreach (Pin pin in chip.iterateThroughPins())
             {
-                CircleCollider2D pinCollider = pin.pinCollider;
                 // If point is in pin's bounds
-                if (!pinCollider.bounds.Contains(point))
+                if (!pin.pinCollider.bounds.Contains(point))
                     continue;
 
                 if (context.ReadValue<float>() == 1)
                 {
                     // Save the starting point of the wire
-                    wireInstantiator.startingPin = pinCollider.transform;
+                    wireInstantiator.startingPin = pin;
                 }
                 else
                 {
                     // Create the wire
                     if (wireInstantiator.startingPin)
-                        wireInstantiator.InstantiateWire(pinCollider.transform);
+                        wireInstantiator.InstantiateWire(pin);
                     wireInstantiator.startingPin = null;
                 }
                 return;
