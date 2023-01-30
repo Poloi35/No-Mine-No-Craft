@@ -73,4 +73,13 @@ public class ModuleFunction : Module
     public void UnsetLinkOnOutput(int outputNb){
         outputs[outputNb] = (null,0);
     }
+
+
+    public int GetNumberOfInputs(){
+        return inputs.Count;
+    }
+
+    public int GetNumberOfOutputs(){
+        return outputs.Count;
+    }
 }

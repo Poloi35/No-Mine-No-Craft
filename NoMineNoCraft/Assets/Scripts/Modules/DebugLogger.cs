@@ -14,12 +14,12 @@ public class DebugLogger : BasicModule
         Debug.Log(prefix + inputs[0].Value);
     }
 
-    protected override int GetNumberOfInputs()
+    public override int GetNumberOfInputs()
     {
         return 1;
     }
 
-    protected override int GetNumberOfOutputs()
+    public override int GetNumberOfOutputs()
     {
         return 0;
     }

@@ -15,4 +15,7 @@ public interface Module
 
     //Usage : Module1.AddListener(outputNb, OnEvent) where Module1 is the module we want to listen the output of number outputNb of, and OnEvent is the function that will be called when said output outputs
     public void AddListener(int outputNb, TriggerOutput func);
+
+    public int GetNumberOfOutputs();
+    public int GetNumberOfInputs();
 }

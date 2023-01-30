@@ -15,12 +15,12 @@ public class ConstantNumber : BasicModule
         TriggerValueChangement(value);
     }
 
-    protected override int GetNumberOfInputs()
+    public override int GetNumberOfInputs()
     {
         return 0;
     }
 
-    protected override int GetNumberOfOutputs()
+    public override int GetNumberOfOutputs()
     {
         return 1;
     }

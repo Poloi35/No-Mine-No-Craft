@@ -13,12 +13,12 @@ public class PolarToCartesian : BasicModule
         TriggerValueChangement(r*Mathf.Sin(theta), 1);
     }
 
-    protected override int GetNumberOfInputs()
+    public override int GetNumberOfInputs()
     {
         return 2;
     }
 
-    protected override int GetNumberOfOutputs()
+    public override int GetNumberOfOutputs()
     {
         return 2;
     }

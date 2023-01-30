@@ -14,11 +14,11 @@ public class MultipliesByTwo : BasicModule
                                                       // Si besoin ajouter un if (inputs[0] == null) avant le trigger mais normalement pas besoin mdr
     }
 
-    protected override int GetNumberOfInputs(){
+    public override int GetNumberOfInputs(){
         return 1;
     }
 
-    protected override int GetNumberOfOutputs()
+    public override int GetNumberOfOutputs()
     {
         return 1;
     }

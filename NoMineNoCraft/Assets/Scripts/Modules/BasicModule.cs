@@ -26,7 +26,7 @@ public abstract class BasicModule : Module
             inputs.Add(null);
         }
     }
-    protected abstract int GetNumberOfInputs();
+    public abstract int GetNumberOfInputs();
 
     //This is the output initialization part and works mainly the same way the input part does
     public delegate void TriggerOutput(float value);
@@ -39,7 +39,7 @@ public abstract class BasicModule : Module
             outputs.Add(null);
         }
     }
-    protected abstract int GetNumberOfOutputs();
+    public abstract int GetNumberOfOutputs();
 
 
 
