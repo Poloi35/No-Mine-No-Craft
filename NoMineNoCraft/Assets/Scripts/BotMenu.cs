@@ -31,6 +31,7 @@ public class BotMenu : MonoBehaviour
         float distanceToTriggerButton = 2.5f;
         if (Vector3.Distance(botPosition.position, this.transform.position) < distanceToTriggerButton && !canvas.activeInHierarchy)
         {
+            Debug.Log("Open");
             canvas.SetActive(true);
             playerCamera.SetActive(false);
             UICamera.SetActive(true);
@@ -45,7 +46,7 @@ public class BotMenu : MonoBehaviour
             return;
 
         Cursor.lockState = CursorLockMode.Locked;
-        Debug.Log("ok");
+        Debug.Log("Close");
         canvas.SetActive(false);
         playerCamera.SetActive(true);
         UICamera.SetActive(false);
