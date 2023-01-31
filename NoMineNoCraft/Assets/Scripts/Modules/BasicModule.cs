@@ -88,14 +88,12 @@ public abstract class BasicModule : Module
     //To link Module1 output to Module2 input just do Module2.LinkToOutput(Module1, the number of the input of Module2, the number of the output of Module1)
     public void LinkToOutput(Module output, int inputNb = 0, int outputNb = 0)
     {
-        Debug.Log(inputNb);
         listeningFuncs[inputNb] = (float value) => OnEvent(value, inputNb);
         output.AddListener(outputNb, listeningFuncs[inputNb]);
     }
 
     public void UnlinkFromOutput(Module output, int inputNb = 0, int outputNb = 0)
     {
-        Debug.Log("On a supprimé un truc nomrlamenet");
         output.RemoveListener(outputNb, listeningFuncs[inputNb]);
     }
 }

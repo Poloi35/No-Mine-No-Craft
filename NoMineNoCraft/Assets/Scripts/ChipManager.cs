@@ -22,13 +22,13 @@ public class ChipManager : MonoBehaviour
         wireInstantiator = GetComponentInParent<WireInstantiator>();
     }
 
-    private Chip InstantiateChip<ModuleType>() where ModuleType : Module, new()
+    private Chip InstantiateChip(Module module)
     {
         Vector3 point = Singleton.instance.worldMousePos;
         point.z = 100f; // Distance from camera to screen (shouldn't be hardcoded)
         GameObject chipGameObject = (GameObject)Instantiate(chipPrefab, point, Quaternion.identity, transform);
         Chip chip = chipGameObject.GetComponent<Chip>();
-        chip.module = new ModuleType();
+        chip.module = module;
 
         int nbInput = chip.module.GetNumberOfInputs();
         int nbOutput = chip.module.GetNumberOfOutputs();
@@ -61,13 +61,26 @@ public class ChipManager : MonoBehaviour
 
     public void InstantiateFromZeroToOneMod()
     {
-        Chip chip = InstantiateChip<FromZeroToOneMod>();
+        Chip chip = InstantiateChip(new FromZeroToOneMod());
         generatorChips.Add(chip);
     }
 
     public void InstantiateDebugLogger()
     {
-        InstantiateChip<DebugLogger>();
+        InstantiateChip(new DebugLogger());
+    }
+
+    public void InstantiateComplicatedFunction(){
+        ModuleFunction modFunc = new ModuleFunction();
+        Module multBy2 = new MultipliesByTwo();
+        Module adds2 = new AddsTwoInputs();
+        modFunc.CreateInput();
+        modFunc.CreateOutput();
+        modFunc.AddLinkOnInput(multBy2);
+        modFunc.AddLinkOnInput(adds2);
+        adds2.LinkToOutput(multBy2,1);
+        modFunc.SetLinkOnOutput(adds2);
+        InstantiateChip(modFunc);
     }
 
     public void StartEndSimulation()
