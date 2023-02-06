@@ -20,7 +20,7 @@ public class Chip : MonoBehaviour
         inputPins = new List<Pin>();
         outputPins = new List<Pin>();
         canvasCam = Camera.main;
-
+        
         // Set chip and pin's collider's bounds to their respective shapes
         chipCollider = GetComponent<BoxCollider2D>();
         chipCollider.offset = Vector2.zero;

@@ -95,5 +95,11 @@ public abstract class BasicModule : Module
     public void UnlinkFromOutput(Module output, int inputNb = 0, int outputNb = 0)
     {
         output.RemoveListener(outputNb, listeningFuncs[inputNb]);
+        listeningFuncs[inputNb] = null;
+    }
+
+    public bool inputIsConnected(int inputNb)
+    {
+        return (listeningFuncs[inputNb] != null);
     }
 }

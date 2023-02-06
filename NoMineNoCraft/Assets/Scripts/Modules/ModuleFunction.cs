@@ -10,8 +10,8 @@ public class ModuleFunction : Module
 
     public ModuleFunction()
     {
-        inputs = new List<List<(Module, int)>>();
-        outputs = new List<(Module, int)>();
+        inputs = new List<List<(Module linkedModule, int linkedModuleInputNb)>>();
+        outputs = new List<(Module linkedModule, int linkedModuleOutputNb)>();
     }
 
     //Creates a new input for the function
@@ -104,5 +104,10 @@ public class ModuleFunction : Module
     public int GetNumberOfOutputs()
     {
         return outputs.Count;
+    }
+
+    public bool inputIsConnected(int inputNb)
+    {
+        return inputs[inputNb][0].linkedModule.inputIsConnected(inputs[inputNb][0].linkedModuleInputNb);
     }
 }

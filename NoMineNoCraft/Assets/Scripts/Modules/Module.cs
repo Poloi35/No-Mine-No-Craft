@@ -21,4 +21,6 @@ public interface Module
 
     int GetNumberOfOutputs();
     int GetNumberOfInputs();
+
+    public bool inputIsConnected(int inputNb);
 }
