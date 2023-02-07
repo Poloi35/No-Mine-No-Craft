@@ -391,7 +391,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interact",
+                    "name": "CloseMenu",
                     "type": "Button",
                     "id": "137eaac6-b792-4d13-84a6-46e51d3bf40b",
                     "expectedControlType": "Button",
@@ -831,11 +831,11 @@
                 {
                     "name": "",
                     "id": "92787137-de6c-4eec-ab25-6760b9b445ef",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Interact",
+                    "action": "CloseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

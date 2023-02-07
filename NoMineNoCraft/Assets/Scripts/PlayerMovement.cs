@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 	private Rigidbody rb;
 	private PlayerInput playerInput;
 
-	public float maxSpeed = 7f;
+	[SerializeField] private float maxSpeed = 7f;
 	public float airSpeedMultiplier = .4f;
 	public float jumpForce = 5f;
 	private float jumpCooldown = .2f;

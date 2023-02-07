@@ -9,19 +9,10 @@ public class BotMenu : MonoBehaviour
     [SerializeField] private GameObject playerCamera;
     [SerializeField] private GameObject UICamera;
     public Transform botPosition;
-    public InputActionAsset mapAsset;
-    private InputActionMap mapPlayer;
-    private InputActionMap mapUI;
 
     private void Awake() {
-        Singleton.instance.playerInputActions.Player.Interact.performed += OpenMenu;
-        Singleton.instance.playerInputActions.UI.Interact.started += CloseMenu;
-    }
-
-    void Start()
-    {
-        mapPlayer = mapAsset.FindActionMap("Player");
-        mapUI = mapAsset.FindActionMap("UI");
+        Singleton.instance.playerInputActions.Player.Interact.started += OpenMenu;
+        Singleton.instance.playerInputActions.UI.CloseMenu.started += CloseMenu;
     }
 
     public void OpenMenu(InputAction.CallbackContext context)
@@ -31,12 +22,10 @@ public class BotMenu : MonoBehaviour
         float distanceToTriggerButton = 2.5f;
         if (Vector3.Distance(botPosition.position, this.transform.position) < distanceToTriggerButton && !canvas.activeInHierarchy)
         {
-            Debug.Log("Open");
             canvas.SetActive(true);
             playerCamera.SetActive(false);
             UICamera.SetActive(true);
-            mapPlayer.Disable();
-            mapUI.Enable();
+            Singleton.instance.SwitchInputMap(Singleton.ActionMap.UI);
         }
     }
 
@@ -46,11 +35,9 @@ public class BotMenu : MonoBehaviour
             return;
 
         Cursor.lockState = CursorLockMode.Locked;
-        Debug.Log("Close");
         canvas.SetActive(false);
         playerCamera.SetActive(true);
         UICamera.SetActive(false);
-        mapUI.Disable();
-        mapPlayer.Enable();
+        Singleton.instance.SwitchInputMap(Singleton.ActionMap.Player);
     }
 }

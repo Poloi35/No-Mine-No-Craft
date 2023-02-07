@@ -413,7 +413,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Interact"",
+                    ""name"": ""CloseMenu"",
                     ""type"": ""Button"",
                     ""id"": ""137eaac6-b792-4d13-84a6-46e51d3bf40b"",
                     ""expectedControlType"": ""Button"",
@@ -853,11 +853,11 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""92787137-de6c-4eec-ab25-6760b9b445ef"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Interact"",
+                    ""action"": ""CloseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -957,7 +957,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
-        m_UI_Interact = m_UI.FindAction("Interact", throwIfNotFound: true);
+        m_UI_CloseMenu = m_UI.FindAction("CloseMenu", throwIfNotFound: true);
         m_UI_test = m_UI.FindAction("test", throwIfNotFound: true);
     }
 
@@ -1093,7 +1093,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_RightClick;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
-    private readonly InputAction m_UI_Interact;
+    private readonly InputAction m_UI_CloseMenu;
     private readonly InputAction m_UI_test;
     public struct UIActions
     {
@@ -1109,7 +1109,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
-        public InputAction @Interact => m_Wrapper.m_UI_Interact;
+        public InputAction @CloseMenu => m_Wrapper.m_UI_CloseMenu;
         public InputAction @test => m_Wrapper.m_UI_test;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
@@ -1150,9 +1150,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @TrackedDeviceOrientation.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
-                @Interact.started -= m_Wrapper.m_UIActionsCallbackInterface.OnInteract;
-                @Interact.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnInteract;
-                @Interact.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnInteract;
+                @CloseMenu.started -= m_Wrapper.m_UIActionsCallbackInterface.OnCloseMenu;
+                @CloseMenu.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnCloseMenu;
+                @CloseMenu.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnCloseMenu;
                 @test.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTest;
                 @test.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTest;
                 @test.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTest;
@@ -1190,9 +1190,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
-                @Interact.started += instance.OnInteract;
-                @Interact.performed += instance.OnInteract;
-                @Interact.canceled += instance.OnInteract;
+                @CloseMenu.started += instance.OnCloseMenu;
+                @CloseMenu.performed += instance.OnCloseMenu;
+                @CloseMenu.canceled += instance.OnCloseMenu;
                 @test.started += instance.OnTest;
                 @test.performed += instance.OnTest;
                 @test.canceled += instance.OnTest;
@@ -1265,7 +1265,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
-        void OnInteract(InputAction.CallbackContext context);
+        void OnCloseMenu(InputAction.CallbackContext context);
         void OnTest(InputAction.CallbackContext context);
     }
 }
