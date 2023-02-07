@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 	private Rigidbody rb;
 	private PlayerInput playerInput;
 
-	public float maxSpeed = 7f;
+	[SerializeField] private float maxSpeed = 7f;
 	public float airSpeedMultiplier = .4f;
 	public float jumpForce = 5f;
 	private float jumpCooldown = .2f;
@@ -24,24 +24,15 @@ public class PlayerMovement : MonoBehaviour
 	private void Awake()
 	{
 		rb = GetComponent<Rigidbody>();
-	}
-
-	public void Jump(InputAction.CallbackContext context)
-	{
-		if (context.performed)
-			isJumping = true;
-		else if (context.canceled)
-			isJumping = false;
+		Singleton.instance.playerInputActions.Player.Jump.performed += _ => isJumping = true;
+		Singleton.instance.playerInputActions.Player.Jump.canceled += _ => isJumping = false;
+		Singleton.instance.playerInputActions.Player.Move.performed += ctx => input = ctx.ReadValue<Vector2>();
+		Singleton.instance.playerInputActions.Player.Move.canceled += ctx => input = ctx.ReadValue<Vector2>();
 	}
 
 	private void ResetJump()
 	{
 		isReadyToJump = true;
-	}
-
-	public void Move(InputAction.CallbackContext context)
-	{
-		input = context.ReadValue<Vector2>();
 	}
 
 	private void SpeedControl()
