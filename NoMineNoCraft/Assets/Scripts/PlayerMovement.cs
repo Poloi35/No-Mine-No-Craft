@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
 	private void Update()
 	{
 		// Ground check
-		isGrounded = Physics.BoxCast(transform.position, new Vector3(bc.size.x * .5f * .999f, .01f, bc.size.z * .5f * .999f), Vector3.down, Quaternion.identity, bc.size.y * .5f, ground);
+		isGrounded = Physics.BoxCast(transform.position + .5f * bc.size.y * Vector3.up, new Vector3(bc.size.x * .5f * .999f, .01f, bc.size.z * .5f * .999f), Vector3.down, Quaternion.identity, bc.size.y * .5f, ground);
 
 		if (isReadyToJump && isGrounded && isJumping)
 		{
