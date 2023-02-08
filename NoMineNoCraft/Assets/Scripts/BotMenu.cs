@@ -17,11 +17,10 @@ public class BotMenu : MonoBehaviour
 
     public void OpenMenu(InputAction.CallbackContext context)
     {
-        Cursor.lockState = CursorLockMode.None;
-
         float distanceToTriggerButton = 2.5f;
         if (Vector3.Distance(botPosition.position, this.transform.position) < distanceToTriggerButton && !canvas.activeInHierarchy)
         {
+            Cursor.lockState = CursorLockMode.None;
             canvas.SetActive(true);
             playerCamera.SetActive(false);
             UICamera.SetActive(true);

@@ -7,15 +7,11 @@ public class MouseLook : MonoBehaviour
 {
 	public float mouseSensitivity = 15f;
 	public Transform playerTransform;
-	float xRotation = 0f;
+	private float xRotation = 0f;
 
 	private void Awake() {
 		Singleton.instance.playerInputActions.Player.Look.performed += Look;
 	}
-
-    void Start()
-    {
-    }
 
 	public void Look(InputAction.CallbackContext context)
 	{
