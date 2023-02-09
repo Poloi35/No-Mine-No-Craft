@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BotMenu : MonoBehaviour
+public class MenusInteractions : MonoBehaviour
 {
     public GameObject canvas;
     [SerializeField] private GameObject playerCamera;
@@ -17,7 +17,7 @@ public class BotMenu : MonoBehaviour
 
     public void OpenMenu(InputAction.CallbackContext context)
     {
-        float distanceToTriggerButton = 2.5f;
+        float distanceToTriggerButton = 4f;
         if (Vector3.Distance(botPosition.position, this.transform.position) < distanceToTriggerButton && !canvas.activeInHierarchy)
         {
             Cursor.lockState = CursorLockMode.None;
